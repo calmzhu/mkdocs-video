@@ -25,6 +25,9 @@ class Plugin(mkdocs.plugins.BasePlugin):
 
 
     def on_page_content(self, html, page, config, files):
+        if not html:
+            # Alow empty documents
+            return 
         content = lxml.html.fromstring(html)
         tags = content.xpath(f'//img[@alt="{self.config["mark"]}" and @src]')
         for tag in tags:
